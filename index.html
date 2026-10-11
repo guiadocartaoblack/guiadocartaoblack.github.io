@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seu cartão compensa? | Guia do Cartão Black</title>
+<meta name="description" content="Descubra em 1 minuto se a anuidade do seu cartão compensa, comparando com um cartão sem anuidade. Calculadora gratuita do Guia do Cartão Black.">
+<meta property="og:title" content="Seu cartão black compensa? Faça a conta em 1 minuto">
+<meta property="og:description" content="Calculadora gratuita: pontos + benefícios que você usa − anuidade, comparado com um cartão sem anuidade.">
+<meta name="theme-color" content="#0b0b0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0b0d; --surface: #17171b; --surface-2: #1f1f25; --border: #2e2e36;
+  --text: #f4f4f6; --muted: #a3a3ad; --gold: #D4AF37; --gold-2: #f6dc8c;
+  --green: #5ee08f; --red: #ff7b7b; --radius: 18px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+html { background: var(--bg); }
+body {
+  background: radial-gradient(circle at 85% 0, #2c2c33 0, var(--bg) 520px) no-repeat, var(--bg);
+  color: var(--text); font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+}
+.app { max-width: 480px; margin: 0 auto; padding: 18px 16px 40px; }
+header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.logo { width: 46px; height: 30px; border-radius: 6px; position: relative; flex: none;
+  background: linear-gradient(135deg, #34343a, #0a0a0c 55%, #222227); box-shadow: inset 0 0 0 1px #45454d; }
+.logo .chip { position: absolute; left: 6px; top: 10px; width: 10px; height: 8px; border-radius: 2px; background: linear-gradient(135deg, var(--gold-2), #b88f2e); }
+.logo .g { position: absolute; right: 5px; top: 2px; font-weight: 800; font-size: 20px; line-height: 1;
+  background: linear-gradient(180deg, var(--gold-2), var(--gold) 55%, #a88326); -webkit-background-clip: text; background-clip: text; color: transparent; padding-top: 2px; }
+.brand { font-size: 12px; letter-spacing: 3px; font-weight: 800; color: var(--gold); text-transform: uppercase; }
+h1 { font-size: 34px; line-height: 1.1; margin: 8px 0 14px; font-weight: 800; letter-spacing: -.5px; }
+h2 { font-size: 24px; line-height: 1.2; margin: 0 0 8px; font-weight: 800; }
+.gold { color: var(--gold); }
+.lead { color: #d6d6dc; font-size: 16px; line-height: 1.5; margin: 0 0 18px; }
+.hint { color: var(--muted); font-size: 13.5px; line-height: 1.45; margin: 8px 0 0; }
+.card-ui { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; }
+.btn { appearance: none; border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 17px;
+  border-radius: 999px; padding: 16px 22px; width: 100%; transition: transform .05s, opacity .2s; }
+.btn:active { transform: scale(.98); }
+.btn-gold { background: var(--gold); color: #111; }
+.btn-gold:disabled { opacity: .35; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-link { background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; padding: 10px; text-decoration: underline; }
+.row-btns { display: grid; gap: 10px; margin-top: 18px; }
+.progress { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.progress .bar { flex: 1; height: 6px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+.progress .fill { height: 100%; background: var(--gold); border-radius: 99px; transition: width .3s; }
+.progress .txt { font-size: 12px; color: var(--muted); font-weight: 700; white-space: nowrap; }
+label.q { display: block; font-weight: 700; font-size: 15px; margin: 18px 0 8px; }
+label.q:first-child { margin-top: 0; }
+.money { display: flex; align-items: center; background: var(--surface-2); border: 2px solid var(--border); border-radius: 14px; padding: 0 14px; transition: border-color .2s; }
+.money:focus-within { border-color: var(--gold); }
+.money span { color: var(--muted); font-weight: 700; font-size: 18px; }
+.money input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--text); font: inherit; font-size: 24px; font-weight: 800; padding: 14px 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.chip-btn { appearance: none; font: inherit; font-size: 14px; font-weight: 700; color: var(--text); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+.chip-btn[aria-pressed="true"] { background: var(--gold); color: #111; border-color: var(--gold); }
+.switch { display: flex; align-items: center; justify-content: space-between; gap: 14px; background: var(--surface-2); border-radius: 14px; padding: 14px; cursor: pointer; }
+.switch input { appearance: none; width: 50px; height: 30px; border-radius: 99px; background: #3a3a43; position: relative; cursor: pointer; flex: none; transition: background .2s; }
+.switch input::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left .2s; }
+.switch input:checked { background: var(--gold); }
+.switch input:checked::after { left: 23px; }
+.switch span { font-weight: 700; font-size: 15px; }
+.counter { display: flex; align-items: center; gap: 14px; }
+.counter button { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font-size: 24px; font-weight: 800; cursor: pointer; }
+.counter output { font-size: 28px; font-weight: 800; min-width: 48px; text-align: center; }
+details { margin-top: 16px; border-top: 1px solid var(--border); padding-top: 12px; }
+summary { cursor: pointer; color: var(--gold); font-weight: 700; font-size: 14px; }
+input[type=range] { width: 100%; accent-color: var(--gold); margin-top: 12px; }
+.hidden { display: none !important; }
+/* resultado */
+.verdict { text-align: center; padding: 24px 18px; border-radius: var(--radius); margin-bottom: 14px; }
+.verdict.good { background: linear-gradient(180deg, rgba(94,224,143,.16), rgba(94,224,143,.04)); border: 1px solid rgba(94,224,143,.45); }
+.verdict.bad { background: linear-gradient(180deg, rgba(255,123,123,.16), rgba(255,123,123,.04)); border: 1px solid rgba(255,123,123,.45); }
+.verdict.even { background: var(--surface); border: 1px solid var(--border); }
+.verdict .emoji { font-size: 40px; }
+.verdict .title { font-size: 26px; font-weight: 800; margin: 6px 0 8px; line-height: 1.15; }
+.verdict .big { font-size: 34px; font-weight: 800; letter-spacing: -.5px; }
+.verdict .sub { color: #d6d6dc; font-size: 14.5px; line-height: 1.45; margin-top: 8px; }
+.lines .l { display: flex; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); font-size: 15px; }
+.lines .l:last-child { border-bottom: 0; }
+.lines .l span:first-child { color: #d6d6dc; }
+.lines .l strong { white-space: nowrap; }
+.lines .l.total { font-size: 17px; }
+.pos { color: var(--green); } .neg { color: var(--red); }
+.tip { font-size: 14.5px; line-height: 1.5; color: #d6d6dc; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.tip:last-child { border-bottom: 0; }
+.tip b { color: var(--text); }
+.cta h2 { font-size: 20px; }
+footer { color: #7d7d86; font-size: 12px; line-height: 1.5; text-align: center; margin-top: 26px; }
+footer a { color: var(--gold); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo" aria-hidden="true"><div class="chip"></div><div class="g">G</div></div>
+    <div class="brand">Guia do Cartão Black</div>
+  </header>
+
+  <main>
+    <!-- INTRO -->
+    <section id="intro">
+      <h1>Seu cartão black <span class="gold">compensa?</span></h1>
+      <p class="lead">Responda <b>4 perguntas</b> e descubra se a anuidade vale a pena, comparando com um cartão <b>sem anuidade</b>. Leva 1 minuto.</p>
+      <div class="card-ui">
+        <div class="tip"><b>🔒 Nada sai do seu celular.</b> A conta é feita aqui mesmo, sem cadastro.</div>
+        <div class="tip"><b>🧮 Só números.</b> Sem promessa de aprovação, sem indicação de cartão.</div>
+      </div>
+      <div class="row-btns">
+        <button class="btn btn-gold" id="start">Começar</button>
+        <button class="btn btn-ghost" id="example">Ver um exemplo pronto</button>
+      </div>
+    </section>
+
+    <!-- PASSOS -->
+    <section id="steps" class="hidden" aria-live="polite">
+      <div class="progress"><div class="bar"><div class="fill" id="fill"></div></div><div class="txt" id="ptxt">Passo 1 de 4</div></div>
+
+      <div class="step" data-step="1">
+        <h2>Quanto você gasta por mês no cartão?</h2>
+        <p class="hint">Use a média das suas últimas faturas.</p>
+        <div class="card-ui">
+          <div class="money"><span>R$</span><input id="gasto" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="Gasto mensal em reais"></div>
+          <div class="chips" data-for="gasto" data-values="2000,4000,6000,10000,15000"></div>
+        </div>
+      </div>
+
+      <div class="step" data-step="2">
+        <h2>Quanto custa a anuidade por ano?</h2>
+        <p class="hint">O valor cheio, por ano. Se for cobrada por mês, multiplique por 12.</p>
+        <div class="card-ui">
+          <div class="money"><span>R$</span><input id="anuidade" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="Anuidade por ano em reais"></div>
+          <div class="chips" data-for="anuidade" data-values="0,480,840,1200,1800"></div>
+          <label class="switch" style="margin-top:16px"><span>O banco dá isenção se eu gastar um mínimo por mês</span><input type="checkbox" id="isencao"></label>
+          <div id="isencaoBox" class="hidden">
+            <label class="q" for="gastoMin">Gasto mínimo por mês para a isenção</label>
+            <div class="money"><span>R$</span><input id="gastoMin" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+            <label class="q">Desconto na anuidade ao atingir esse gasto</label>
+            <div class="chips" data-for="desconto" data-values="100,50" data-suffix="%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step" data-step="3">
+        <h2>Quantos pontos ele dá por dólar gasto?</h2>
+        <p class="hint">Está no app do banco ou no regulamento do cartão (ex.: "2,2 pontos por dólar").</p>
+        <div class="card-ui">
+          <div class="money"><span>pts</span><input id="pts" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="Pontos por dólar"></div>
+          <div class="chips" data-for="pts" data-values="1,1.5,2,2.5,3,4"></div>
+          <details>
+            <summary>Ajustes avançados (opcional)</summary>
+            <label class="q" for="dolar">Cotação do dólar usada pelo banco</label>
+            <div class="money"><span>R$</span><input id="dolar" inputmode="decimal" autocomplete="off"></div>
+            <p class="hint">Valor de referência. Confira a cotação que aparece na sua fatura.</p>
+            <label class="q" for="milheiro">Quanto valem 1.000 pontos para você</label>
+            <div class="money"><span>R$</span><input id="milheiro" inputmode="decimal" autocomplete="off"></div>
+            <div class="chips" data-for="milheiro" data-values="15,20,25,30" data-prefix="R$ "></div>
+            <p class="hint">Depende de como você resgata. Na dúvida, fique com um valor mais baixo.</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="step" data-step="4">
+        <h2>Quais benefícios você <span class="gold">realmente</span> usa?</h2>
+        <p class="hint">Conte só o que você usaria de verdade. Benefício que você não usa vale R$ 0.</p>
+        <div class="card-ui">
+          <label class="q">Acessos à sala VIP por ano</label>
+          <div class="counter"><button type="button" data-step-btn="-1" aria-label="Diminuir">−</button><output id="vipOut">0</output><button type="button" data-step-btn="1" aria-label="Aumentar">+</button></div>
+          <div id="vipValBox" class="hidden">
+            <label class="q" for="vipValor">Quanto você pagaria por cada acesso?</label>
+            <div class="money"><span>R$</span><input id="vipValor" inputmode="decimal" autocomplete="off"></div>
+            <div class="chips" data-for="vipValor" data-values="50,100,150" data-prefix="R$ "></div>
+          </div>
+          <label class="q" for="seguro">Seguro viagem que você compraria de qualquer jeito (R$ por ano)</label>
+          <div class="money"><span>R$</span><input id="seguro" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+          <label class="q" for="outros">Outros benefícios que você usa (R$ por ano)</label>
+          <div class="money"><span>R$</span><input id="outros" inputmode="decimal" autocomplete="off" placeholder="0"></div>
+        </div>
+      </div>
+
+      <div class="row-btns">
+        <button class="btn btn-gold" id="next" disabled>Continuar</button>
+        <button class="btn-link" id="back">Voltar</button>
+      </div>
+    </section>
+
+    <!-- RESULTADO -->
+    <section id="result" class="hidden" aria-live="polite">
+      <div class="verdict" id="verdict"></div>
+
+      <div class="card-ui">
+        <label class="q" for="cbRange" style="margin-top:0">Comparando com um cartão sem anuidade com <span class="gold" id="cbTxt"></span> de cashback</label>
+        <div class="chips" data-for="cashback" data-values="0,0.5,1,1.5" data-suffix="%"></div>
+        <p class="hint">Escolha o cashback que você conseguiria num cartão sem anuidade.</p>
+      </div>
+
+      <div class="card-ui">
+        <label class="q" style="margin-top:0">E se o seu gasto mensal fosse… <span class="gold" id="gastoTxt"></span></label>
+        <input type="range" id="gastoRange" min="500" max="30000" step="500" aria-label="Simular gasto mensal">
+        <p class="hint">Só para entender a conta. <b>Não aumente seus gastos</b> para ganhar pontos ou isenção.</p>
+      </div>
+
+      <div class="card-ui lines" id="lines"></div>
+      <div class="card-ui" id="tips"></div>
+
+      <div class="card-ui cta">
+        <h2 id="ctaTitle">Quer controlar todos os seus cartões e pontos?</h2>
+        <p class="lead" style="margin-bottom:6px">A planilha completa organiza vencimento dos pontos, transferências bonificadas e qual cartão usar em cada compra.</p>
+        <div class="row-btns">
+          <a class="btn btn-gold" id="listaBtn" href="#" target="_blank" rel="noopener" style="text-align:center;text-decoration:none">Entrar na lista de espera</a>
+          <button class="btn btn-ghost" id="share">Compartilhar esta calculadora</button>
+          <button class="btn-link" id="redo">Refazer a conta</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Conteúdo educativo, sem recomendação individual. Confira anuidade, isenção e pontuação no regulamento do seu cartão; as regras mudam.<br>
+    Nenhum dado é salvo ou enviado. · <a id="igLink" href="#" target="_blank" rel="noopener">@guiadocartaoblack</a>
+  </footer>
+</div>
+
+<script>
+// ===== CONFIGURE AQUI =====
+const LISTA_ESPERA_URL = "https://forms.gle/COLE_AQUI_O_LINK_DO_SEU_FORMULARIO";
+const INSTAGRAM_URL = "https://www.instagram.com/guiadocartaoblack/";
+const DOLAR_PADRAO = 5.50;   // referência: ajuste quando quiser
+const MILHEIRO_PADRAO = 20;  // R$ por 1.000 pontos (conservador)
+// ==========================
+
+const $ = (id) => document.getElementById(id);
+const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+const brl2 = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const num = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
+
+// Lê números como as pessoas digitam: "4000", "4.000", "4.000,50", "2,2", "2.5"
+function parseBR(v) {
+  if (typeof v === "number") return v;
+  let s = String(v || "").replace(/[^\d.,-]/g, "");
+  if (!s) return NaN;
+  if (s.includes(",")) s = s.replace(/\./g, "").replace(",", ".");
+  else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
+  return parseFloat(s);
+}
+
+// ===== A CONTA (mesma lógica da planilha) =====
+function calc(i) {
+  const gastoAno = i.gasto * 12;
+  const pontosAno = i.dolar > 0 ? gastoAno / i.dolar * i.pts : 0;
+  const valorPontos = pontosAno / 1000 * i.milheiro;
+  const beneficios = i.vipQtd * i.vipValor + i.seguro + i.outros;
+  const temIsencao = i.isencao && i.gasto >= i.gastoMin;
+  const anuidadeEfetiva = temIsencao ? i.anuidade * (1 - i.desconto) : i.anuidade;
+  const resultado = valorPontos + beneficios - anuidadeEfetiva;
+  const alternativa = gastoAno * i.cashback;
+  const vantagem = resultado - alternativa;
+  const retorno100 = i.dolar > 0 ? 100 * i.pts * i.milheiro / (i.dolar * 1000) : 0;
+  const cashback100 = 100 * i.cashback;
+  const taxaMensal = i.dolar > 0 ? 12 * i.pts * i.milheiro / (i.dolar * 1000) : 0;
+  const breakEven = beneficios >= i.anuidade ? 0 : (taxaMensal > 0 ? (i.anuidade - beneficios) / taxaMensal : Infinity);
+  return { gastoAno, pontosAno, valorPontos, beneficios, temIsencao, anuidadeEfetiva, resultado,
+           alternativa, vantagem, retorno100, cashback100, breakEven };
+}
+window.calc = calc; // para testes
+
+// ===== ESTADO =====
+const DEFAULTS = { gasto: NaN, anuidade: NaN, isencao: false, gastoMin: 0, desconto: 1, pts: NaN,
+  dolar: DOLAR_PADRAO, milheiro: MILHEIRO_PADRAO, vipQtd: 0, vipValor: 100, seguro: 0, outros: 0, cashback: 0.005 };
+const EXEMPLO = { gasto: 4000, anuidade: 1200, isencao: true, gastoMin: 5000, desconto: 1, pts: 2.2,
+  dolar: 5.5, milheiro: 20, vipQtd: 4, vipValor: 150, seguro: 300, outros: 0, cashback: 0.005 };
+let state = { ...DEFAULTS };
+let step = 1;
+let exemplo = false;
+
+const moneyFields = ["gasto", "anuidade", "gastoMin", "pts", "dolar", "milheiro", "vipValor", "seguro", "outros"];
+const ZERO_VAZIO = ["gastoMin", "seguro", "outros"]; // zero aparece como campo vazio
+function fmtField(k, v) {
+  if (!isFinite(v)) return "";
+  if (v === 0 && ZERO_VAZIO.includes(k)) return "";
+  return num.format(v);
+}
+function syncInputs() {
+  for (const k of moneyFields) { const el = $(k); if (el && document.activeElement !== el) el.value = fmtField(k, state[k]); }
+  $("isencao").checked = state.isencao;
+  $("isencaoBox").classList.toggle("hidden", !state.isencao);
+  $("vipOut").textContent = state.vipQtd;
+  $("vipValBox").classList.toggle("hidden", state.vipQtd === 0);
+  syncChips();
+}
+function syncChips() {
+  document.querySelectorAll(".chips").forEach((box) => {
+    const k = box.dataset.for;
+    box.querySelectorAll("button").forEach((b) => {
+      const v = parseFloat(b.dataset.v);
+      const cur = (k === "desconto" || k === "cashback") ? state[k] * 100 : state[k];
+      b.setAttribute("aria-pressed", String(Math.abs(cur - v) < 1e-9));
+    });
+  });
+}
+
+// chips (botões de valores prontos)
+document.querySelectorAll(".chips").forEach((box) => {
+  const k = box.dataset.for, pre = box.dataset.prefix || "", suf = box.dataset.suffix || "";
+  box.dataset.values.split(",").forEach((raw) => {
+    const v = parseFloat(raw);
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip-btn"; b.dataset.v = v;
+    const isMoney = ["gasto", "anuidade"].includes(k);
+    b.textContent = isMoney ? (v === 0 ? "Sem anuidade" : brl.format(v)) : pre + num.format(v) + suf;
+    b.addEventListener("click", () => {
+      state[k] = (k === "desconto" || k === "cashback") ? v / 100 : v;
+      syncInputs(); validate(); if (!$("result").classList.contains("hidden")) render();
+    });
+    box.appendChild(b);
+  });
+});
+
+// campos digitados
+for (const k of moneyFields) {
+  const el = $(k); if (!el) continue;
+  el.addEventListener("focus", () => el.select());
+  el.addEventListener("input", () => { state[k] = parseBR(el.value); syncChips(); validate(); });
+  el.addEventListener("blur", () => { el.value = fmtField(k, state[k]); });
+  el.addEventListener("keydown", (e) => { if (e.key === "Enter" && !$("next").disabled) $("next").click(); });
+}
+$("isencao").addEventListener("change", (e) => { state.isencao = e.target.checked; syncInputs(); validate(); });
+document.querySelectorAll("[data-step-btn]").forEach((b) => b.addEventListener("click", () => {
+  state.vipQtd = Math.max(0, Math.min(99, state.vipQtd + parseInt(b.dataset.stepBtn, 10))); syncInputs();
+}));
+
+// ===== NAVEGAÇÃO =====
+function validStep(s) {
+  const ok = (v) => isFinite(v) && v >= 0;
+  if (s === 1) return ok(state.gasto) && state.gasto > 0;
+  if (s === 2) return ok(state.anuidade) && (!state.isencao || (ok(state.gastoMin) && state.gastoMin > 0));
+  if (s === 3) return ok(state.pts) && ok(state.dolar) && state.dolar > 0 && ok(state.milheiro);
+  if (s === 4) return ok(state.vipValor) && ok(state.seguro || 0) && ok(state.outros || 0);
+  return true;
+}
+function validate() { $("next").disabled = !validStep(step); }
+function show(id) {
+  ["intro", "steps", "result"].forEach((s) => $(s).classList.toggle("hidden", s !== id));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+function goStep(n) {
+  step = n;
+  document.querySelectorAll(".step").forEach((el) => el.classList.toggle("hidden", +el.dataset.step !== n));
+  $("fill").style.width = (n / 4 * 100) + "%";
+  $("ptxt").textContent = `Passo ${n} de 4`;
+  $("next").textContent = n === 4 ? "Ver resultado" : "Continuar";
+  validate();
+  const first = document.querySelector(`.step[data-step="${n}"] input`);
+  if (first && window.matchMedia("(pointer:fine)").matches) first.focus();
+}
+$("start").addEventListener("click", () => { exemplo = false; state = { ...DEFAULTS }; syncInputs(); show("steps"); goStep(1); });
+$("example").addEventListener("click", () => { exemplo = true; state = { ...EXEMPLO }; syncInputs(); show("result"); render(); });
+$("next").addEventListener("click", () => {
+  if (!validStep(step)) return;
+  ["seguro", "outros"].forEach((k) => { if (!isFinite(state[k])) state[k] = 0; });
+  if (step < 4) goStep(step + 1); else { show("result"); render(); }
+});
+$("back").addEventListener("click", () => { if (step > 1) goStep(step - 1); else show("intro"); });
+$("redo").addEventListener("click", () => { exemplo = false; state = { ...DEFAULTS }; syncInputs(); show("intro"); });
+$("gastoRange").addEventListener("input", (e) => { state.gasto = +e.target.value; render(); });
+
+// ===== RESULTADO =====
+function money(v, signed) {
+  const s = brl.format(Math.abs(v));
+  if (!signed) return s;
+  return (v > 0.5 ? "+ " : v < -0.5 ? "− " : "") + s;
+}
+function render() {
+  const r = calc(state);
+  const pct = num.format(state.cashback * 100) + "%";
+  $("cbTxt").textContent = pct;
+  $("gastoTxt").textContent = brl.format(state.gasto);
+  $("gastoRange").value = Math.min(30000, Math.max(500, state.gasto));
+  syncChips();
+
+  const v = $("verdict");
+  const nome = exemplo ? "O cartão do exemplo" : "Seu cartão";
+  const alt = state.cashback > 0 ? `um cartão sem anuidade com ${pct} de cashback` : "não ter cartão com anuidade";
+  if (Math.abs(r.vantagem) < 0.5) {
+    v.className = "verdict even";
+    v.innerHTML = `<div class="emoji">⚖️</div><div class="title">Empate</div><div class="sub">${nome} rende o mesmo que ${alt}.</div>`;
+  } else if (r.vantagem > 0) {
+    v.className = "verdict good";
+    v.innerHTML = `<div class="emoji">✅</div><div class="title">Compensa</div><div class="big pos">${money(r.vantagem, true)}/ano</div>
+      <div class="sub">${nome} rende isso <b>a mais</b> por ano do que ${alt}.</div>`;
+  } else {
+    v.className = "verdict bad";
+    const sePaga = r.resultado > 0.5 ? `Ele até "se paga" (${money(r.resultado, true)}/ano), mas ` : "";
+    const frase = sePaga ? sePaga + alt : alt.charAt(0).toUpperCase() + alt.slice(1);
+    v.innerHTML = `<div class="emoji">❌</div><div class="title">Melhor um cartão sem anuidade</div><div class="big neg">${money(r.vantagem, true)}/ano</div>
+      <div class="sub">${frase} renderia mais.</div>`;
+  }
+  if (exemplo) v.innerHTML += `<div class="sub" style="margin-top:10px">Exemplo ilustrativo com valores fictícios. <b>Refaça com os seus números.</b></div>`;
+
+  $("lines").innerHTML = `
+    <div class="l"><span>Pontos por ano</span><strong>${num.format(Math.round(r.pontosAno))}</strong></div>
+    <div class="l"><span>Valor desses pontos</span><strong class="pos">${money(r.valorPontos, true)}</strong></div>
+    <div class="l"><span>Benefícios que você usa</span><strong class="pos">${money(r.beneficios, true)}</strong></div>
+    <div class="l"><span>Anuidade que você paga${r.temIsencao ? " (com isenção)" : ""}</span><strong class="${r.anuidadeEfetiva > 0 ? "neg" : ""}">${r.anuidadeEfetiva > 0 ? "− " : ""}${brl.format(r.anuidadeEfetiva)}</strong></div>
+    <div class="l total"><span><b>Resultado do cartão</b></span><strong class="${r.resultado >= 0 ? "pos" : "neg"}">${money(r.resultado, true)}</strong></div>
+    <div class="l"><span>Cashback do sem anuidade (${pct})</span><strong>${brl.format(r.alternativa)}</strong></div>
+    <div class="l total"><span><b>Diferença por ano</b></span><strong class="${r.vantagem >= 0 ? "pos" : "neg"}">${money(r.vantagem, true)}</strong></div>`;
+
+  const tips = [];
+  tips.push(`<div class="tip">A cada <b>R$ 100</b> gastos, seus pontos valem <b>${brl2.format(r.retorno100)}</b>. O cashback daria <b>${brl2.format(r.cashback100)}</b>.</div>`);
+  if (state.anuidade > 0) {
+    if (r.breakEven === 0) tips.push(`<div class="tip">Os benefícios que você usa já cobrem a anuidade cheia.</div>`);
+    else if (!isFinite(r.breakEven)) tips.push(`<div class="tip">Com essa pontuação, os pontos <b>nunca</b> pagam a anuidade cheia sozinhos.</div>`);
+    else if (state.gasto >= r.breakEven) tips.push(`<div class="tip">Com o seu gasto, pontos e benefícios já cobrem a anuidade cheia (isso acontece a partir de <b>${brl.format(Math.ceil(r.breakEven))}</b> por mês).</div>`);
+    else tips.push(`<div class="tip">Para a anuidade cheia se pagar, seria preciso gastar <b>${brl.format(Math.ceil(r.breakEven))}</b> por mês.</div>`);
+  }
+  if (state.isencao && !r.temIsencao && state.gastoMin > state.gasto)
+    tips.push(`<div class="tip">Faltam <b>${brl.format(state.gastoMin - state.gasto)}</b> por mês para a isenção. <b>Não gaste mais só por isso</b>: tente negociar a isenção com o banco.</div>`);
+  if (r.temIsencao && state.anuidade > 0)
+    tips.push(`<div class="tip">Com o seu gasto, você já tem direito à isenção. Confirme se ela está aplicada na fatura.</div>`);
+  if (state.vipQtd === 0 && state.seguro === 0 && state.outros === 0)
+    tips.push(`<div class="tip">Você não marcou nenhum benefício. Se não usa sala VIP nem seguros, um cartão sem anuidade tende a ser suficiente.</div>`);
+  $("tips").innerHTML = tips.join("");
+}
+
+// ===== LINKS =====
+$("igLink").href = INSTAGRAM_URL;
+if (LISTA_ESPERA_URL.includes("COLE_AQUI")) {
+  // lista de espera ainda não configurada: o botão leva ao Instagram
+  $("ctaTitle").textContent = "Em breve: a planilha completa";
+  $("listaBtn").textContent = "Seguir @guiadocartaoblack";
+  $("listaBtn").href = INSTAGRAM_URL;
+} else {
+  $("listaBtn").href = LISTA_ESPERA_URL;
+}
+$("share").addEventListener("click", async () => {
+  const data = { title: "Seu cartão compensa?", text: "Fiz a conta do meu cartão nessa calculadora grátis:", url: location.href };
+  try {
+    if (navigator.share) await navigator.share(data);
+    else { await navigator.clipboard.writeText(location.href); $("share").textContent = "Link copiado ✓"; }
+  } catch (e) { /* usuário cancelou */ }
+});
+
+syncInputs();
+goStep(1);
+show("intro");
+</script>
+</body>
+</html>
